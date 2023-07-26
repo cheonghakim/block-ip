@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="userId" />
+    <input type="password" id="userPassword" />
+    <button id="loginBtn">로그인</button>
+  </body>
+
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+  ></script>
+  <script defer>
+    window.onload = () => {
+      const loginBtn = document.querySelector("#loginBtn");
+      loginBtn.addEventListener("click", async () => {
+        const userId = document.querySelector("#userId");
+        const password = document.querySelector("#userPassword");
+        const formData = new FormData();
+        formData.append("id", userId.value);
+        formData.append("password", password.value);
+        const { data } = await axios.post("/login", formData);
+      });
+    };
+  </script>
+</html>
