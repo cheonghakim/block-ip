@@ -1,3 +1,4 @@
+use bcrypt::{hash, verify, DEFAULT_COST};
 use std::io::Error as IoError;
 use std::str;
 
@@ -11,5 +12,16 @@ pub fn change_to_utf8(data: &[u8]) -> Result<String, IoError> {
             std::io::ErrorKind::InvalidData,
             "Failed to decode the byte string as UTF-8.",
         ))
+    }
+}
+
+pub fn hash_password(password: &str) -> Result<String, bcrypt::BcryptError> {
+    hash(password, DEFAULT_COST)
+}
+
+pub fn verify_password(input_password: &str, hashed_password: &str) -> bool {
+    match verify(input_password, hashed_password) {
+        Ok(valid) => valid,
+        Err(_) => false,
     }
 }

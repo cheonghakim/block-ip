@@ -4,11 +4,11 @@ use serde::{Deserialize, Serialize};
 pub struct Response<T> {
     success: bool,
     message: String,
-    data: T,
+    data: Option<T>,
 }
 
 impl<T> Response<T> {
-    pub fn new(success: bool, message: String, data: T) -> Self {
+    pub fn new(success: bool, message: String, data: Option<T>) -> Self {
         Self {
             success,
             message,

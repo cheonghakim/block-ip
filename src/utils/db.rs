@@ -1,5 +1,5 @@
 use lazy_static::lazy_static;
-use rusqlite::{Connection, OpenFlags, Result, ToSql};
+use rusqlite::{Connection, OpenFlags, Result, Row, ToSql};
 use std::fmt;
 use std::sync::{Arc, Mutex};
 
@@ -15,6 +15,10 @@ impl DatabaseState {
     pub fn execute(&mut self, query: &str, params: &[&dyn ToSql]) -> Result<()> {
         self.connection.execute(query, params)?;
         Ok(())
+    }
+
+    pub fn prepare(&mut self, query: &str) -> Result<rusqlite::Statement> {
+        self.connection.prepare(query)
     }
 }
 
